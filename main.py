@@ -156,7 +156,7 @@ class GymManager:
             print("❌ 형식 오류 (YYYY.MM 로 입력하세요)")
     
     def txt_print(self):
-        filename = r"C:\gym_members.txt" #경로 설정
+        filename = "gym_members.txt" #경로 설정
 
         try:
             with open(filename, "w", encoding="utf-8") as f:
