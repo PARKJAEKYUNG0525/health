@@ -1,0 +1,32 @@
+{
+  "admin": {
+    "pw": "abc",
+    "locker": null,
+    "review": [],
+    "diary": []
+  },
+  "홍길동": {
+    "pw": "a",
+    "locker": "1",
+    "review": [],
+    "diary": []
+  },
+  "김철수": {
+    "pw": "b",
+    "locker": null,
+    "review": [],
+    "diary": []
+  },
+  "춘향이": {
+    "pw": "c",
+    "locker": null,
+    "review": [],
+    "diary": []
+  },
+  "길동이": {
+    "pw": "d",
+    "locker": "2",
+    "review": [],
+    "diary": []
+  }
+}

@@ -1,5 +1,5 @@
 import calendar
-import pickle
+import json
 
 class GymManager:
 
@@ -178,22 +178,22 @@ class GymManager:
             print("❌ 파일 저장 중 오류:", e)
     
     def user_save(self):
-        filename = "users.p"
+        filename = "users.json"
 
         try:
-            with open(filename, "wb") as f:
-                pickle.dump(self.users, f)
+            with open(filename, "w", encoding='UTF-8') as f:
+                json.dump(self.users, f, indent=2, ensure_ascii=False)
                 return True
         except Exception as e:
             print("❌ 파일 저장 중 오류:", e)
             return False
 
     def user_load(self):
-        filename = "users.p"
+        filename = "users.json"
 
         try:
-            with open(filename, "rb") as f:
-                return pickle.load(f)
+            with open(filename, "r", encoding='UTF-8') as f:
+                return json.load(f)
         except Exception as e:
             return None
 
