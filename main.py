@@ -198,7 +198,26 @@ class GymManager:
         except Exception as e:
             return None
 
+    def write_diary(self,name):
+        date = input("날짜 입력 (YYYY.MM.DD) ➤ ")
+        content = input("운동 내용 작성 ➤ ")
 
+        manager.users[name]["diary"].append({
+                "date": date,
+                "content": content
+        })
+
+        print("✅ 운동일지 저장 완료")
+    
+    def write_review(self,name):
+        review = input("리뷰 작성 ➤ ")
+        manager.users[name]["review"].append(review)
+        print("리뷰작성완료") # 요구사항 반영
+    
+    def lookup_review(self,name):
+        ym = input("조회할 연월 입력 (YYYY.MM) ➤ ")
+        manager.monthly_attendance(name, ym)
+        
 # ================= 실행부 =================
 
 manager = GymManager()
@@ -246,7 +265,7 @@ while True:
                     manager.select_locker()
                 elif choice == "6":
                     manager.change_locker()
-                elif choice == "7":   
+                elif choice == "7":
                     manager.cancel_locker()
                 elif choice == "8":
                     manager.read_reviews()
@@ -309,16 +328,14 @@ while True:
                     print("✅ 운동일지 저장 완료")
 
                 elif choice == "2":
-                    review = input("리뷰 작성 ➤ ")
-                    manager.users[name]["review"].append(review)
-                    print("리뷰작성완료") # 요구사항 반영
-                
+                    manager.write_review(name)
+
                 elif choice == "3":
-                    ym = input("조회할 연월 입력 (YYYY.MM) ➤ ")
-                    manager.monthly_attendance(name, ym)
+                    manager.lookup_review(name)
 
                 elif choice == "0":
                     print("👋 로그아웃")
                     break
+
                 else:
-                    print("⚠ 잘못된 선택입니다.")
+                    print("⚠ 잘못된 선택입니다.") 
