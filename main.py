@@ -289,7 +289,7 @@ while True:
                 print("="*50)
 
                 choice = input("번호 선택 ➤ ")
-
+                
                 if choice == "1":
                     manager.write_diary(name)
 
@@ -302,6 +302,5 @@ while True:
                 elif choice == "0":
                     print("👋 로그아웃")
                     break
-
                 else:
                     print("⚠ 잘못된 선택입니다.") 
