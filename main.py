@@ -226,9 +226,9 @@ while True:
                 print("\n" + "="*50)
                 print("                 🔧 관리자 메뉴")
                 print("="*50)
-                print("1️⃣  회원 추가  |  4️⃣  회원 삭제   |  7️⃣  라커룸 취소  |  8️⃣  리뷰 조회")
-                print("2️⃣  회원 조회  |  5️⃣  라커룸 선택  |  9️⃣  TXT 출력")
-                print("3️⃣  회원 수정  |  6️⃣  라커룸 변경  |  0️⃣  로그 아웃")
+                print("1️⃣  회원 추가  |  5️⃣  라커룸 선택  |  8️⃣  리뷰 조회")
+                print("2️⃣  회원 조회  |  6️⃣  라커룸 변경  |  9️⃣  TXT 출력")
+                print("3️⃣  회원 수정  |  7️⃣  라커룸 취소  |  0️⃣  로그 아웃")
                 print("="*50)
 
                 choice = input("번호 선택 ➤ ")
@@ -245,7 +245,7 @@ while True:
                     manager.select_locker()
                 elif choice == "6":
                     manager.change_locker()
-                elif choice == "7":   
+                elif choice == "7":
                     manager.cancel_locker()
                 elif choice == "8":
                     manager.read_reviews()
