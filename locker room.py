@@ -158,29 +158,27 @@ if manager.login(name, pw):
                 print("⚠ 잘못된 선택입니다.")
 
     # 일반 사용자 메뉴
-    else:
-        while True:
-            print("\n" + "="*40)
-            print(f"🙋 {name}님 메뉴")
-            print("="*40)
-            print("1️⃣  운동일지 작성")
-            print("2️⃣  리뷰 작성")
-            print("0️⃣  종료")
-            print("="*40)
+else:
+    while True:
+        print("\n" + "=" * 40)
+        print(f"🙋 {name}님 메뉴")
+        print("=" * 40)
+        print("1️⃣  운동일지 작성")
+        print("2️⃣  리뷰 작성")
+        print("0️⃣  종료")
+        print("=" * 40)
 
-            choice = input("번호 선택 ➤ ")
+        choice = input("번호 선택 ➤ ")
 
-            if choice == "1":
-                diary = input("운동 내용 작성 ➤ ")
-                print("✅ 운동일지 저장 완료")
+        if choice == "1":
+            manager.write_diary(name)
 
-            elif choice == "2":
-                review = input("리뷰 작성 ➤ ")
-                manager.users[name]["review"].append(review)
-                print("✅ 리뷰 저장 완료")
+        elif choice == "2":
+            manager.write_review(name)
 
-            elif choice == "0":
-                print("👋 로그아웃")
-                break
-            else:
-                print("⚠ 잘못된 선택입니다.")
+        elif choice == "0":
+            print("👋 로그아웃")
+            break
+
+        else:
+            print("⚠ 잘못된 선택입니다.")
