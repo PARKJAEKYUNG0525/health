@@ -1,5 +1,6 @@
 import calendar
 import json
+import datetime
 
 class GymManager:
 
@@ -245,9 +246,9 @@ while True:
                 print("\n" + "="*50)
                 print("                 🔧 관리자 메뉴")
                 print("="*50)
-                print("1️⃣  회원 추가  |  5️⃣  라커룸 선택  |  8️⃣  리뷰 조회")
-                print("2️⃣  회원 조회  |  6️⃣  라커룸 변경  |  9️⃣  TXT 출력")
-                print("3️⃣  회원 수정  |  7️⃣  라커룸 취소  |  0️⃣  로그 아웃")
+                print("1️⃣  회원 추가  |  4️⃣  회원 삭제    |  7️⃣  라커룸 취소  |  8️⃣  리뷰 조회")
+                print("2️⃣  회원 조회  |  5️⃣  라커룸 선택  |  9️⃣  TXT 출력")
+                print("3️⃣  회원 수정  |  6️⃣  라커룸 변경  |  0️⃣  로그 아웃")
                 print("="*50)
 
                 choice = input("번호 선택 ➤ ")
@@ -291,7 +292,40 @@ while True:
                 choice = input("번호 선택 ➤ ")
                 
                 if choice == "1":
-                    manager.write_diary(name)
+                    # [추가] 관리자 메뉴 스타일의 UI 박스
+                    print("\n" + "="*50)
+                    print("                🗓️  운동일지 작성 모드")
+                    print("="*50)
+
+                    date = input("날짜 입력 (YYYY.MM.DD) ➤ ")
+
+                     # [에러 체크 1] 잘못된 날짜 형식 및 존재하지 않는 날짜 검증
+                    try:
+                        datetime.datetime.strptime(date, "%Y.%m.%d")
+                    except ValueError:
+                        print("\n" + "="*50)
+                        print("❌ 에러: 날짜 형식이 틀리거나 존재하지 않는 날짜입니다.")
+                        print("        (입력 예시: 2026.03.04)")
+                        print("="*50)
+                        continue
+
+                    # [에러 체크 2] 중복 날짜 검증
+                    diary = manager.users[name]["diary"]
+
+                    if any(log["date"] == date for log in diary):
+                        print("\n" + "="*50)
+                        print("❌ 에러: 이미 작성된 날짜입니다.")
+                        print("="*50)
+                        continue                  
+
+                    content = input("운동 내용 작성 ➤ ")
+
+                    manager.users[name]["diary"].append({
+                        "date": date,
+                        "content": content
+                    })
+
+                    print("✅ 운동일지 저장 완료")
 
                 elif choice == "2":
                     manager.write_review(name)
