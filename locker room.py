@@ -284,32 +284,33 @@ while True:
                     print("⚠ 잘못된 선택입니다.")
 
         # 일반 사용자 메뉴
-    else:
-        while True:
-            print("\n" + "=" * 40)
-            print(f"🙋 {name}님 메뉴")
-            print("=" * 40)
-            print("1️⃣  운동일지 작성")
-            print("2️⃣  리뷰 작성")
-            print("0️⃣  종료")
-            print("=" * 40)
+        else:
+            while True:
+                print("\n" + "="*50)
+                print(f"                🙋 {name}님 메뉴")
+                print("="*50)
+                print("                 1️⃣  운동일지 작성")
+                print("                 2️⃣  리뷰 작성")
+                print("                 3️⃣  월별 출석 통계")
+                print("                 0️⃣  로그아웃")
+                print("="*50)
 
-            choice = input("번호 선택 ➤ ")
+                choice = input("번호 선택 ➤ ")
 
-            if choice == "1":
-                manager.write_diary(name)
+                if choice == "1":
+                    manager.write_diary(name)
 
-            elif choice == "2":
-                manager.write_review(name)
+                elif choice == "2":
+                    manager.write_review(name)
 
-            elif choice == "3":
-                manager.lookup_review(name)
+                elif choice == "3":
+                    manager.lookup_review(name)
 
-            elif choice == "0":
-                print("👋 로그아웃")
-                break
+                elif choice == "0":
+                    print("👋 로그아웃")
+                    break
 
-            else:
-                print("⚠ 잘못된 선택입니다.") 
+                else:
+                    print("⚠ 잘못된 선택입니다.") 
 
-                #dd
+                    #dd
