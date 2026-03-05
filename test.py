@@ -5,13 +5,9 @@ import datetime
 class GymManager:
 
     def __init__(self):
-        """
-        헬스장 회원 관리를 위한 객체.
-        생성 시 저장된 사용자 데이터를 불러온다. 없으면 더미데이터로 설정한다.
-        """
-        user_data = self.load_user_data()
-        if user_data:
-            self.users = user_data
+        userData = self.user_load()
+        if userData:
+            self.users = userData
         else:
             self.users = {
                 "admin": {"pw": "abc", "locker": None, "review": [], "diary": []},
@@ -22,13 +18,6 @@ class GymManager:
 
     # 로그인
     def login(self, name, pw):
-        """
-        로그인 유효성을 확인한다.
-        
-        :param name: 회원 이름
-        :param pw: 회원 비밀번호
-        :return: 로그인 성공 여부(True/False)
-        """
         print("\n" + "="*50)
         if name in self.users and self.users[name]["pw"] == pw:
             print(f"              ✅ {name}님 로그인 성공!")
@@ -40,9 +29,6 @@ class GymManager:
 
     # C - 회원 추가
     def create_user(self):
-        """
-        회원 추가 UI를 출력한다. 새로운 회원의 이름과 비밀번호를 받아 회원 데이터에 추가한다.
-        """
         print("\n[ 회원 추가 ]")
         name = input("➤ 추가할 회원 이름: ")
         pw = input("➤ 비밀번호: ")
@@ -55,9 +41,6 @@ class GymManager:
 
     # R - 회원 조회
     def read_users(self):
-        """
-        모든 회원의 라커룸 번호를 출력한다.
-        """
         print("\n[ 회원 목록 ]")
         print("-"*40)
         for name, info in self.users.items():
@@ -67,9 +50,6 @@ class GymManager:
 
     # U - 회원 수정
     def update_user(self):
-        """
-        회원 비밀번호 수정 UI를 출력한다. 회원 이름과 새 비밀번호를 입력받아 회원 비밀번호를 변경한다.
-        """
         print("\n[ 회원 수정 ]")
         name = input("➤ 수정할 회원 이름: ")
         if name in self.users:
@@ -81,9 +61,6 @@ class GymManager:
 
     # D - 회원 삭제
     def delete_user(self):
-        """
-        회원 삭제 UI를 출력한다. 회원 이름을 입력받아 회원 데이터에서 제거한다.
-        """
         print("\n[ 회원 삭제 ]")
         name = input("➤ 삭제할 회원 이름: ")
         if name in self.users and name != "admin":
@@ -94,9 +71,6 @@ class GymManager:
 
     # 라커룸 선택
     def select_locker(self):
-        """
-        라커룸 선택 UI를 출력한다. 회원 이름과 라커룸 번호를 입력받아 해당 회원 데이터에 라커룸 번호를 배정한다.
-        """
         print("\n[ 라커룸 선택 ]")
         name = input("➤ 회원 이름: ")
         if name not in self.users:
@@ -112,9 +86,6 @@ class GymManager:
 
     # 라커룸 변경
     def change_locker(self):
-        """
-        라커룸 변경 UI를 출력한다. 회원 이름과 라커룸 번호를 입력받아 해당 회원 데이터에 새로운 라커룸 번호를 배정한다.
-        """
         print("\n[ 라커룸 변경 ]")
         name = input("➤ 회원 이름: ")
 
@@ -136,9 +107,6 @@ class GymManager:
 
     # 라커룸 취소
     def cancel_locker(self):
-        """
-        라커룸 취소 UI를 출력한다. 회원 이름을 입력으로 받아 해당 회원 데이터의 라커룸 번호를 None으로 바꾼다.
-        """
         print("\n[ 라커룸 취소 ]")
         name = input("➤ 회원 이름: ")
         if name in self.users and self.users[name]["locker"] is not None:
@@ -149,9 +117,6 @@ class GymManager:
 
     # 리뷰 조회
     def read_reviews(self):
-        """
-        모든 회원의 바라는 점 목록을 출력한다.
-        """
         print("\n" + "="*40)
         print("📋 [ 전 회원 바라는 점(리뷰) 조회 ]")
         print("-" * 40)
@@ -170,12 +135,6 @@ class GymManager:
 
     # 월별 통계
     def monthly_attendance(self, name, year_month):
-        """
-        회원 이름과 연월을 받아 해당 회원의 당월 출석횟수와 출석률을 출력한다.
-
-        :param name: 회원 이름
-        :param year_month: 조회할 연월(yyyy.mm)
-        """
         try:
             year, month = map(int, year_month.split("."))
 
@@ -198,9 +157,6 @@ class GymManager:
             print("❌ 형식 오류 (YYYY.MM 로 입력하세요)")
     
     def txt_print(self):
-        """
-        현재 회원 데이터에서 회원별 요약 정보를 텍스트 파일로 저장한다.
-        """
         filename = "gym_members.txt" #경로 설정
 
         try:
@@ -217,17 +173,12 @@ class GymManager:
                     f.write(f"운동 기록 수 : {len(info['diary'])}\n")
                     f.write("-"*50 + "\n")
 
-            print("✅ gym_members.txt 저장 완료!")
+            print("✅ C 드라이브에 gym_members.txt 저장 완료!")
 
         except Exception as e:
             print("❌ 파일 저장 중 오류:", e)
     
-    def save_user_data(self):
-        """
-        회원 데이터를 JSON 파일로 저장한다.
-
-        :return: 파일 저장 성공 여부 (True/False)
-        """
+    def user_save(self):
         filename = "users.json"
 
         try:
@@ -238,12 +189,7 @@ class GymManager:
             print("❌ 파일 저장 중 오류:", e)
             return False
 
-    def load_user_data(self):
-        """
-        JSON 파일로부터 회원 데이터를 불러온다.
-
-        :return: 회원 데이터(dict) / None(파일이 없을 경우)
-        """
+    def user_load(self):
         filename = "users.json"
 
         try:
@@ -252,13 +198,8 @@ class GymManager:
         except Exception as e:
             return None
 
-        # 1 운동일지 작성
     def write_diary(self,name):
-        """
-        회원 이름을 받고 운동일지 작성 UI를 출력한다. 운동 날짜, 운동 내용을 입력받아 해당 회원 데이터의 운동 일지 목록에 딕셔너리로 추가한다.
 
-        :param name: 운동일지를 작성할 회원 이름
-        """
         while True:
             print("\n"+"="*50)
             print("운동일지 작성 모드")
@@ -272,16 +213,16 @@ class GymManager:
                 print("❌ 에러: 날짜 형식이 틀리거나 존재하지 않는 날짜입니다.")
                 print("        (입력 예시: 2026.03.04)")
                 print("="*50)
-                return        
-        
-            diary = self.users[name]["diary"]
+                return
+
+            diary = manager.users[name]["diary"]
 
             if any(log["date"] == date for log in diary):
-                    print("\n" + "="*50)
-                    print("❌ 에러: 이미 작성된 날짜입니다.")
-                    print("="*50)
-                    return          
-        
+                print("\n" + "="*50)
+                print("❌ 에러: 이미 작성된 날짜입니다.")
+                print("="*50)
+                return  
+
             content = input("운동 내용 작성 ➤ ")
 
             self.users[name]["diary"].append({
@@ -292,19 +233,102 @@ class GymManager:
             print("✅ 운동일지 저장 완료")
             break
     
-        # 2 리뷰작성
     def write_review(self,name):
-        """
-        회원 이름을 받고 리뷰 작성 UI를 출력한다. 리뷰 내용을 입력받아 해당 회원 데이터의 리뷰 목록에 추가한다.
-        """
         review = input("리뷰 작성 ➤ ")
-        self.users[name]["review"].append(review)
+        manager.users[name]["review"].append(review)
         print("리뷰작성완료") # 요구사항 반영
     
-        #3 조회
     def lookup_review(self,name):
-        """
-        회원 이름을 입력받아 출석 통계 UI를 출력한다. 조회할 연월을 입력받아 해당 월의 출석 통계를 출력한다.
-        """
         ym = input("조회할 연월 입력 (YYYY.MM) ➤ ")
-        self.monthly_attendance(name, ym)
+        manager.monthly_attendance(name, ym)
+
+        
+# ================= 실행부 =================
+
+manager = GymManager()
+
+print("="*40)
+print("🏋️  헬스장 회원 관리 시스템  🏋️")
+print("="*40)
+while True:
+    print("(종료시 exit 입력)")
+    name = input("이름 입력: ")
+
+    if name == "exit":
+        if manager.user_save():
+            print("💾 데이터 저장 완료")
+        else:
+            print("⛔ 데이터 저장 실패")
+        print("👋 프로그램 완전 종료")
+        break
+    pw = input("비밀번호 입력: ")
+
+    if manager.login(name, pw):
+
+        # 관리자 메뉴
+        if name == "admin":
+            while True:
+                print("\n" + "="*50)
+                print("                 🔧 관리자 메뉴")
+                print("="*50)
+                print("1️⃣  회원 추가  |  4️⃣  회원 삭제    |  7️⃣  라커룸 취소  |  8️⃣  리뷰 조회")
+                print("2️⃣  회원 조회  |  5️⃣  라커룸 선택  |  9️⃣  TXT 출력")
+                print("3️⃣  회원 수정  |  6️⃣  라커룸 변경  |  0️⃣  로그 아웃")
+                print("="*50)
+
+                choice = input("번호 선택 ➤ ")
+
+                if choice == "1":
+                    manager.create_user()
+                elif choice == "2":
+                    manager.read_users()
+                elif choice == "3":
+                    manager.update_user()
+                elif choice == "4":
+                    manager.delete_user()
+                elif choice == "5":
+                    manager.select_locker()
+                elif choice == "6":
+                    manager.change_locker()
+                elif choice == "7":
+                    manager.cancel_locker()
+                elif choice == "8":
+                    manager.read_reviews()
+                elif choice == "9":
+                    manager.txt_print()
+                elif choice == "0":
+                    print("👋 프로그램 종료")
+                    break
+                else:
+                    print("⚠ 잘못된 선택입니다.")
+
+        # 일반 사용자 메뉴
+        else:
+            while True:
+                print("\n" + "="*50)
+                print(f"                🙋 {name}님 메뉴")
+                print("="*50)
+                print("                 1️⃣  운동일지 작성")
+                print("                 2️⃣  리뷰 작성")
+                print("                 3️⃣  월별 출석 통계")
+                print("                 0️⃣  로그아웃")
+                print("="*50)
+
+                choice = input("번호 선택 ➤ ")
+
+                if choice == "1":
+                    manager.write_diary(name)
+
+                elif choice == "2":
+                    manager.write_review(name)
+
+                elif choice == "3":
+                    manager.lookup_review(name)
+
+                elif choice == "0":
+                    print("👋 로그아웃")
+                    break
+
+                else:
+                    print("⚠ 잘못된 선택입니다.") 
+##
